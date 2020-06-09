@@ -4,7 +4,8 @@
       <div class="card">
         <div class="card-title font-weight-bold">{{blog.blog.creatorEmail}}</div>
         <div class="card-body shadow">
-          <p class="card-text">{{blog.blog.body}}</p>
+          <div class="font-weight-bold pb-3">{{blog.blog.title}}</div>
+          <div class="card-text">{{blog.blog.body}}</div>
         </div>
       </div>
     </div>
@@ -13,11 +14,11 @@
         <div class="card">
           <div class="card-body shadow">
             <h5 class="card-title text-center">Comments</h5>
-            <p
-              class="card-text"
+            <div
+              class="card"
               v-for="comment in blog.comments"
               :key="comment.id"
-            >{{comment.creator.name}} - {{comment.body}}</p>
+            >{{comment.creator.name}} - {{comment.body}}</div>
           </div>
         </div>
       </div>

@@ -26,6 +26,10 @@ const routes = [
     path: "/blog/:id",
     name: "Blog",
     component: Blogs,
+  },
+  {
+    path: "*",
+    redirect: "/"
   }
 ];
 

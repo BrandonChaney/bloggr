@@ -1,14 +1,15 @@
 <template>
   <div class="home container-fluid">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <h1>Welcome to Bloggr</h1>
+    <div class="row text-center text-light">
+      <div class="col-12">
+        <h1>Welcome to Bloggr</h1>
+      </div>
+    </div>
     <div class="row" v-if="$auth.isAuthenticated">
       <div class="col">
         <form class="form-inline" @submit.prevent="newBlog">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Title" v-model="blog.title" />
-            <input type="text" class="form-control" placeholder="Body" v-model="blog.body" />
-          </div>
+          <input type="text" class="form-control" placeholder="Title" v-model="newBlogs.title" />
+          <input type="text" class="form-control" placeholder="Body" v-model="newBlogs.body" />
           <button type="submit" class="btn btn-outline-success">Submit</button>
         </form>
       </div>
@@ -20,7 +21,7 @@
 </template>
 
 <script>
-import Blog from "@/components/BlogsComponent.vue";
+import Blog from "@/components/BlogComponent.vue";
 export default {
   name: "home",
   mounted() {
@@ -28,9 +29,9 @@ export default {
   },
   data() {
     return {
-      blog: {
+      newBlogs: {
         title: "",
-        creatorEmail: ""
+        body: ""
       }
     };
   },
@@ -40,8 +41,9 @@ export default {
     }
   },
   methods: {
-    newBlog() {
-      this.$store.dispatch("newBlog", this.blog);
+    newBlog(data) {
+      this.$store.dispatch("newBlog", { ...this.newBlogs });
+      this.newBlogs = {};
     }
   },
   components: {

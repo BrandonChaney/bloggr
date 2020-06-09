@@ -1,10 +1,10 @@
-<template>
+ <template>
   <div class="blog col-3">
     <div class="card">
       <div class="card-body">
         <router-link :to="{ name: 'Blog', params: { id: blog.id }}">
           <h4 class="card-title">{{blog.title}}</h4>
-          <p class="card-text">{{blog.creator.name}}</p>
+          <p class="card-text">{{blog.creatorEmail}}</p>
         </router-link>
         <button
           type="button"

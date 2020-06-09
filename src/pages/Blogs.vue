@@ -1,30 +1,25 @@
 <template>
-  <div class="Blogs container">
+  <div class="container">
     <div class="row">
-      <div class="col-6">
-        <span class="card-title font-weight-bold">{{blog.title}}</span>
-        <span class="text-muted">~{{blog.creator}}</span>
-        <p class="card-text">
-          tags: {{blog.tags}}
-          <br />
-          published: {{blog.published}}
-          <br />
-          _id {{blog._id}}
-          <br />
-          title: {{blog.title}}
-          <br />
-          body: {{blog.body}}
-          <br />
-          creatorEmail: {{blog.creatorEmail}}
-          <br />
-          createdAt: {{blog.createdAt}}
-          <br />
-          updatedAt: {{blog.updatedAt}}
-          <br />
-          creator: {{blog.creator}}
-          <br />
-        </p>
-        <button type="button" class="btn btn-outline-danger" @click="deleteBlog">DELETE!</button>
+      <div class="card">
+        <div class="card-title font-weight-bold">{{blog.blog.creatorEmail}}</div>
+        <div class="card-body shadow">
+          <p class="card-text">{{blog.blog.body}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+        <div class="card">
+          <div class="card-body shadow">
+            <h5 class="card-title text-center">Comments</h5>
+            <p
+              class="card-text"
+              v-for="comment in blog.comments"
+              :key="comment.id"
+            >{{comment.creator.name}} - {{comment.body}}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -32,26 +27,29 @@
 
 <script>
 export default {
-  name: "Blogs",
+  name: "Profile",
+  data() {
+    return {
+      newComments: {
+        body: ""
+      }
+    };
+  },
   mounted() {
-    // NOTE when the page loads, go get the blog who's id is in the url params
-    this.$store.dispatch("getBlogComments", this.$route.params.id);
-  },
-  methods: {
-    deleteBlog() {
-      this.$store.dispatch("deleteblog", this.blog._id);
-    }
-  },
-
-  // NOTE take some action before navigation changes
-  beforeRouteLeave(to, from, next) {
-    this.$store.commit("setActiveBlog", {});
-    next();
+    this.$store.dispatch("getFullBlog", this.$route.params.id);
+    this.$store.dispatch("myBlogs", this.$auth.userInfo);
   },
   computed: {
+    comments() {
+      return this.$store.state.comments;
+    },
     blog() {
-      return this.$store.state.active;
+      return this.$store.state.activeBlog;
     }
+  },
+  methods: {},
+  components: {
+    Comment
   }
 };
 </script>
